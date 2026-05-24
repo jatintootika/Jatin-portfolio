@@ -1,0 +1,277 @@
+/* ============================================
+   SKILLS UNIVERSE — Cinematic 3D Animation
+   ============================================ */
+
+.skills-section {
+  position: relative;
+  min-height: 100vh;
+  padding: 100px 40px 80px;
+  background: radial-gradient(circle at center, #0a0410 0%, #050208 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.skills-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+}
+
+.skills-container {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  z-index: 2;
+}
+
+/* Label */
+.skills-label {
+  text-align: center;
+  z-index: 10;
+}
+
+.skills-label-tag {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #a78bfa;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.4);
+}
+
+.skills-heading {
+  font-family: var(--font-heading, 'Syne', sans-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 8px 0 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.skills-subtext {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 12px 0 0;
+}
+
+/* ─── 3D Viewport & Galaxy ─── */
+.skills-3d-viewport {
+  position: relative;
+  width: 100%;
+  height: 800px;
+  perspective: 1200px; /* Crucial for 3D depth */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.skills-3d-viewport--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skills-galaxy {
+  position: relative;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  /* Rotate the entire galaxy to lie flat like a disc, and continuously spin */
+  transform: rotateX(65deg) rotateZ(0deg);
+  animation: galaxy-spin 60s linear infinite;
+}
+
+@keyframes galaxy-spin {
+  0% { transform: rotateX(65deg) rotateZ(0deg); }
+  100% { transform: rotateX(65deg) rotateZ(360deg); }
+}
+
+/* ─── Orbit Rings ─── */
+.skills-orbit-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1.5px solid #8b5cf6;
+  box-shadow: 
+    inset 0 0 20px rgba(139, 92, 246, 0.2),
+    0 0 20px rgba(139, 92, 246, 0.2);
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+/* ─── Center Core ─── */
+.skills-core-3d {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  /* Counter-rotate to stay upright */
+  transform: translate(-50%, -50%) rotateZ(0deg) rotateX(-65deg);
+  animation: core-counter-spin 60s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 50%;
+  background: rgba(10, 4, 20, 0.8);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  box-shadow: 
+    0 0 40px rgba(139, 92, 246, 0.4),
+    inset 0 0 20px rgba(139, 92, 246, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+@keyframes core-counter-spin {
+  0% { transform: translate(-50%, -50%) rotateZ(0deg) rotateX(-65deg); }
+  100% { transform: translate(-50%, -50%) rotateZ(-360deg) rotateX(-65deg); }
+}
+
+.skills-core-glow {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+  pointer-events: none;
+  animation: core-pulse 4s ease-in-out infinite;
+}
+
+@keyframes core-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+.skills-core-text {
+  position: relative;
+  font-family: var(--font-heading, 'Syne', sans-serif);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #fff;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 15px #a78bfa;
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+.skills-core-text--active {
+  color: #c4b5fd;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+/* ─── Skill Nodes ─── */
+.skill-node-3d {
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* Move to position, then counter-rotate so the node always faces the camera */
+  transform: translate(var(--x), var(--y)) rotateZ(0deg) rotateX(-65deg);
+  animation: node-counter-spin 60s linear infinite;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+@keyframes node-counter-spin {
+  0% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotateZ(0deg) rotateX(-65deg); }
+  100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotateZ(-360deg) rotateX(-65deg); }
+}
+
+.skill-node-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(15, 8, 30, 0.9);
+  border: 1px solid var(--color);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
+  backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 0;
+  transform: scale(0);
+  animation: skill-pop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes skill-pop {
+  to { opacity: 1; transform: scale(1); }
+}
+
+.skill-node-3d--lg .skill-node-inner { width: 80px; height: 80px; }
+.skill-node-3d--md .skill-node-inner { width: 65px; height: 65px; }
+.skill-node-3d--sm .skill-node-inner { width: 50px; height: 50px; }
+
+/* Hover effects */
+.skill-node-3d:hover .skill-node-inner,
+.skill-node-3d--hovered .skill-node-inner {
+  transform: scale(1.3);
+  background: var(--color);
+  box-shadow: 0 0 30px var(--color), inset 0 0 10px rgba(255,255,255,0.5);
+  z-index: 20;
+}
+
+.skill-node-label-3d {
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  line-height: 1.1;
+  pointer-events: none;
+  transition: color 0.3s;
+}
+
+.skill-node-3d--lg .skill-node-label-3d { font-size: 0.75rem; }
+.skill-node-3d--md .skill-node-label-3d { font-size: 0.65rem; }
+.skill-node-3d--sm .skill-node-label-3d { font-size: 0.55rem; }
+
+.skill-node-3d:hover .skill-node-label-3d,
+.skill-node-3d--hovered .skill-node-label-3d {
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .skills-3d-viewport {
+    height: 500px;
+    perspective: 800px;
+  }
+  
+  .skills-galaxy {
+    transform: rotateX(60deg) scale(0.6);
+    animation: galaxy-spin-mobile 40s linear infinite;
+  }
+
+  @keyframes galaxy-spin-mobile {
+    0% { transform: rotateX(60deg) rotateZ(0deg) scale(0.6); }
+    100% { transform: rotateX(60deg) rotateZ(360deg) scale(0.6); }
+  }
+
+  @keyframes core-counter-spin {
+    0% { transform: translate(-50%, -50%) rotateZ(0deg) rotateX(-60deg) scale(1.6); }
+    100% { transform: translate(-50%, -50%) rotateZ(-360deg) rotateX(-60deg) scale(1.6); }
+  }
+
+  @keyframes node-counter-spin {
+    0% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotateZ(0deg) rotateX(-60deg) scale(1.6); }
+    100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotateZ(-360deg) rotateX(-60deg) scale(1.6); }
+  }
+}
