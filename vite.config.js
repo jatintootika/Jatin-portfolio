@@ -5,4 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: '/Jatin-portfolio/',
   plugins: [react()],
+  build: {
+    minify: false, // Disabling minification fixes the @splinetool/runtime missing property buildTimeline bug
+  }
 })
