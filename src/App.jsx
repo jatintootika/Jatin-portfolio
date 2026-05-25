@@ -338,7 +338,7 @@ function App() {
             x: robotX,
             opacity: robotOpacity
           }}
-          className="fixed left-1/2 top-1/2 w-[180vw] h-[120vh] origin-center z-10 pointer-events-auto"
+          className="robot-modern-wrapper origin-center z-10 pointer-events-auto"
         >
           <div className={`scene-loading-state ${robotLoaded ? 'loaded' : ''}`}>
             <div className="loader-ring"></div>
